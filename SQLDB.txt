@@ -1,0 +1,18 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE whiteboards (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    data JSONB,
+    owner_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE whiteboard_collaborators (
+    whiteboard_id INTEGER REFERENCES whiteboards(id),
+    user_id INTEGER REFERENCES users(id),
+    PRIMARY KEY (whiteboard_id, user_id)
+);
